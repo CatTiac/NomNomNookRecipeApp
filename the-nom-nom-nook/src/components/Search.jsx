@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+
 import { useNavigate } from 'react-router-dom';
 
 function Search() {
@@ -19,6 +20,7 @@ function Search() {
         <input
           onChange={(e) => setInput(e.target.value)}
           type="text"
+          placeholder="Search for a recipe"
           value={input}
         />
       </div>
@@ -32,6 +34,7 @@ const FormStyle = styled.form`
   div {
     position: relative;
     width: 100%;
+    padding: 3rem 0rem;
   }
 
   input {

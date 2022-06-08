@@ -4,26 +4,26 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { Link } from "react-router-dom";
 
-function Popular() {
-  const [popular, setPopular] = useState([]);
+function GlutenFree() {
+  const [glutenFree, setGlutenFree] = useState([]);
 
   useEffect(() => {
-    getPopular();
+    getGlutenFree();
   }, []);
 
-  const getPopular = async () => {
-    const check = localStorage.getItem("popular");
+  const getGlutenFree = async () => {
+    const check = localStorage.getItem("Gluten Free");
 
     if (check) {
-      setPopular(JSON.parse(check));
+      setGlutenFree(JSON.parse(check));
     } else {
       const api = await fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY_NOM}&number=9`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY_NOM}&number=9&tags=GlutenFree`
       );
       const data = await api.json();
 
-      localStorage.setItem("popular", JSON.stringify(data.recipes));
-      setPopular(data.recipes);
+      localStorage.setItem("Gluten Free", JSON.stringify(data.recipes));
+      setGlutenFree(data.recipes);
       console.log(data.recipes);
     }
   };
@@ -31,18 +31,18 @@ function Popular() {
   return (
     <div>
       <Wrapper>
-        <h3>Popular Recipes</h3>
+        <h3>Gluten-Free Recipes</h3>
 
         <Splide
           options={{
-            perPage: 3,
+            perPage: 4,
             arrows: true,
             pagination: false,
             drag: "free",
             gap: "5rem",
           }}
         >
-          {popular.map((recipe) => {
+          {glutenFree.map((recipe) => {
             return (
               <SplideSlide key={recipe.id}>
                 <Card>
@@ -67,10 +67,9 @@ const Wrapper = styled.div`
 
 const Card = styled.div`
   min-height: 25rem;
+  border-radius: 2rem;
   overflow: hidden;
   position: relative;
-  border-radius: 2rem;
-
 
   img {
     border-radius: 2rem;
@@ -107,4 +106,4 @@ const Gradient = styled.div`
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
 `;
 
-export default Popular;
+export default GlutenFree;
